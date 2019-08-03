@@ -23,24 +23,17 @@ import * as passportConfig from "./config/passport";
 const app = express();
 
 // Connect to MongoDB
-// const mongoUrl = MONGODB_URI;
+const mongoUrl = MONGODB_URI;
 
-const mongoUrl = "mongodb+srv://cerner-aman:TeUSTZgTF88MI3ia@cluster0-manks.mongodb.net/mydb?retryWrites=true&w=majority";
-
-
-/**
- * remove mongodb connection
- */
-// mongoose.Promise = bluebird;
-
+mongoose.Promise = bluebird;
 mongoose.connect(mongoUrl, { useNewUrlParser: true} ).then(
     () => { 
         /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ 
-        console.log('MONGODB_URI connected')
+        console.log('mongo db connected')
 },
 ).catch(err => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
-    // process.exit();
+    process.exit();
 });
 
 // Express configuration
@@ -54,9 +47,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: SESSION_SECRET,
-    /**
-     * remove store for session 
-     */
     // store: new MongoStore({
     //     url: mongoUrl,
     //     autoReconnect: true
@@ -93,8 +83,7 @@ app.use(
 /**
  * Primary app routes.
  */
-
-app.use("/drug",drugController);
-app.use("/order",orderController);
+app.use("/drugs",drugController);
+app.use("/orders",orderController);
 
 export default app;

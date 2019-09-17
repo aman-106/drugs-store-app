@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { ObjectId } from "bson";
 
-
-
 type drugRef = {
   id: ObjectId,
   qantity: Number
